@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftDate
 
 class APRootVC: NSViewController {
 
@@ -40,7 +41,13 @@ class APRootVC: NSViewController {
                 windowController.showWindow(self)
                 
             } else {
-                APHUD.hide(message: "功能暂未开源，敬请期待~", delayTime: 2)
+//                APHUD.hide(message: "功能暂未开源，敬请期待~", delayTime: 2)
+                let startTime = (Date().dateAtStartOf(.day) - 31.days).toString(.iso(ISOFormatter.Options.withInternetDateTime))
+                let endTime = (Date().dateAtStartOf(.day) - 1.days).toString(.iso(ISOFormatter.Options.withInternetDateTime))
+
+                APClient.appSalestrends(appid: "1548184995", measures: "measureDisplay", frequency: "day", startTime: startTime, endTime: endTime, measuresKey: "total_tax_usd_utc").request { result, response, error in
+                    print(response as Any)
+                }
             }
         }
         
